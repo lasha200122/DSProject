@@ -83,7 +83,7 @@ class Training():
 
     def data_split(self, df: pd.DataFrame, test_size: float = 0.33) -> tuple:
         logging.info("Splitting data into training and test sets...")
-        return train_test_split(df[['x1','x2']], df['y'], test_size=test_size, 
+        return train_test_split(df[['sepal length (cm)', 'sepal width (cm)', 'petal length (cm)', 'petal width (cm)']], df['target'], test_size=test_size, 
                                 random_state=conf['general']['random_state'])
     
     def train(self, X_train: pd.DataFrame, y_train: pd.DataFrame) -> None:
@@ -93,7 +93,7 @@ class Training():
     def test(self, X_test: pd.DataFrame, y_test: pd.DataFrame) -> float:
         logging.info("Testing the model...")
         y_pred = self.model.predict(X_test)
-        res = f1_score(y_test, y_pred)
+        res = f1_score(y_test, y_pred, average='weighted')
         logging.info(f"f1_score: {res}")
         return res
 
